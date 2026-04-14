@@ -1,0 +1,76 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <AssemblyName>MinemadeCrafting</AssemblyName>
+    <RootNamespace>MinemadeCrafting</RootNamespace>
+    <Nullable>enable</Nullable>
+    <LangVersion>9.0</LangVersion>
+    <!--
+      Rocketmod plugins must be class libraries.
+      Copy the output DLL to your Rocket/Plugins/MinemadeCrafting/ folder.
+    -->
+    <OutputType>Library</OutputType>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <!--
+    REFERENCE PATHS
+    Adjust these to your local Unturned + Rocketmod install.
+    Common locations:
+      Windows  →  C:\Program Files (x86)\Steam\steamapps\common\Unturned\
+      Linux    →  ~/.steam/steam/steamapps/common/Unturned/
+
+    Rocketmod assemblies live under:
+      <Unturned>/Rocket/Binaries/
+  -->
+  <ItemGroup>
+    <!-- Core Unturned game assembly -->
+    <Reference Include="Assembly-CSharp">
+      <HintPath>lib\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <!-- Rocketmod core -->
+    <Reference Include="Rocket.Core">
+      <HintPath>lib\Rocket.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <!-- Rocketmod Unturned bridge -->
+    <Reference Include="Rocket.Unturned">
+      <HintPath>lib\Rocket.Unturned.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="Rocket.API">
+      <HintPath>lib\Rocket.API.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <!-- Steamworks.NET (bundled with Unturned) -->
+    <Reference Include="com.rlabrecque.steamworks.net.dll">
+      <HintPath>lib\com.rlabrecque.steamworks.net.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <!-- UnityEngine (bundled with Unturned) -->
+    <Reference Include="UnityEngine">
+      <HintPath>lib\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>lib\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>lib\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SDG.NetTransport">
+      <HintPath>lib\SDG.NetTransport.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,5 @@
+D:\downloads\minemade_crafting\obj\Debug\net48\MinemadeCrafting.csproj.AssemblyReference.cache
+D:\downloads\minemade_crafting\obj\Debug\net48\MinemadeCrafting.GeneratedMSBuildEditorConfig.editorconfig
+D:\downloads\minemade_crafting\obj\Debug\net48\MinemadeCrafting.AssemblyInfoInputs.cache
+D:\downloads\minemade_crafting\obj\Debug\net48\MinemadeCrafting.AssemblyInfo.cs
+D:\downloads\minemade_crafting\obj\Debug\net48\MinemadeCrafting.csproj.CoreCompileInputs.cache
