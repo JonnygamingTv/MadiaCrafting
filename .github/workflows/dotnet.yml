@@ -1,0 +1,51 @@
+name: Build MinemadeCrafting Plugin
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest  # Required for .NET Framework 4.8
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Restore NuGet packages
+        run: nuget restore MinemadeCrafting.csproj
+
+      - name: Build
+        run: |
+          msbuild MinemadeCrafting.csproj `
+            /p:Configuration=Release `
+            /p:Platform="AnyCPU" `
+            /p:TargetFrameworkVersion=v4.8
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MinemadeCrafting-Plugin
+          path: |
+            bin/Release/net48/MinemadeCrafting.dll
+            bin/Release/net48/MinemadeCrafting.xml
+          if-no-files-found: error
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.run_number }}
+          files: bin/Release/net48/MinemadeCrafting.dll
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
