@@ -153,6 +153,9 @@ namespace MinemadeCrafting
             if (buttonName == "SAR_CraftingLLogOut")
             {
                 EffectManager.askEffectClearByID(Instance.Configuration.Instance.UEFFECT_ID, player.Player.channel.GetOwnerTransportConnection());
+                player.Player.disablePluginWidgetFlag(EPluginWidgetFlags.Modal);
+                player.Player.enablePluginWidgetFlag(EPluginWidgetFlags.ShowCenterDot);
+                player.Player.disablePluginWidgetFlag(EPluginWidgetFlags.NoBlur);
                 return;
             }
 
@@ -283,6 +286,10 @@ namespace MinemadeCrafting
             EffectManager.SendUIEffect(Instance.effectAsset, Instance.Configuration.Instance.EFFECT_ID, transport, true);
 
             SetText(transport, $"Canvas/BACKGROUND/LeftSide/PlayerInfoBG/PlayerName", player.DisplayName);
+
+            player.Player.enablePluginWidgetFlag(EPluginWidgetFlags.Modal);
+            player.Player.disablePluginWidgetFlag(EPluginWidgetFlags.ShowCenterDot);
+            player.Player.enablePluginWidgetFlag(EPluginWidgetFlags.NoBlur);
 
             // Hide all rows first
             for (int i = 0; i < Instance.Configuration.Instance.MAX_UI_ROWS; i++)
