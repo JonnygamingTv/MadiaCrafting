@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using Logger = Rocket.Core.Logging.Logger;
 
@@ -108,22 +109,28 @@ namespace MinemadeCrafting
             if (!Physics.Raycast(
                     player.Player.look.aim.position, player.Player.look.aim.forward,
                     out RaycastHit hit, Configuration.Instance.RAY_DIST, RayMasks.BARRICADE))
-                return;
+                return; // ~0.05ms
 
-            var barricadeDrop = BarricadeManager.FindBarricadeByRootTransform(hit.transform);
+            var barricadeDrop = BarricadeManager.FindBarricadeByRootTransform(hit.transform); // Touches Unity component. Unknown ms
             if (barricadeDrop == null) return;
 
             ushort barricadeId = barricadeDrop.asset.id;
-            if (!_recipeIndex.TryGetValue(barricadeId, out var recipes)) return;
+            if (!_recipeIndex.TryGetValue(barricadeId, out var recipes)) return; // ~50ns
 
             ulong steamId = player.CSteamID.m_SteamID;
+            var transport = player.Player.channel.GetOwnerTransportConnection();
             _playerRecipeList[steamId]  = recipes;
             _playerSearchText[steamId]  = string.Empty;
 
-            var itemsMap = BuildItemsMap(player);
-            _playerItemsCache[steamId] = itemsMap;
+            Task.Run(() =>
+            {
+                var itemsMap = BuildItemsMap(player); // READS player.Inventory.items. Inventory is completely 'virtual'. Should not use Unity directly.
+                _playerItemsCache[steamId] = itemsMap;
 
-            TaskDispatcher.QueueOnMainThread(() => DisplayRecipes(player, recipes, itemsMap));
+                TaskDispatcher.QueueOnMainThread(() => DisplayRecipes(player, recipes, itemsMap));
+                string avatarUrl = player.SteamProfile.AvatarFull.AbsoluteUri; // lazy-load
+                TaskDispatcher.QueueOnMainThread(() => SetImage(transport, "Canvas/BACKGROUND/LeftSide/PlayerInfoBG/Mask2/PlayerAvatar", avatarUrl));
+            });
         }
 
         private void OnEffectTextCommitted(Player nativePlayer, string buttonName, string text)
