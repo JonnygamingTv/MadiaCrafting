@@ -1,3 +1,8 @@
+1. Place a `/i workbench` (Crafting list is per-ID configurable.)
+2. Punch with your fist (LMB / RMB)
+<img width="3440" height="1440" alt="20260707174226_1" src="https://github.com/user-attachments/assets/301731d3-8ee0-4144-9689-7071a8f39068" />
+
+
 # MinemadeCrafting — Rocketmod Plugin
 
 Native .NET 4.8 replacement for the uScript2 MINEMADE_CRAFTING script.  
